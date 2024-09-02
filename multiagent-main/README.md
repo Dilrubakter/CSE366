@@ -4,8 +4,6 @@ Berkeley AI Materials
 
 Version 1.002. Last Updated: 10/22/2014.
 
----
-
 ### Table of Contents
 
 - [Introduction](#Introduction)
