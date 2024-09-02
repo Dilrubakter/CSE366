@@ -40,7 +40,6 @@ def scoreEvaluationFunction(currentGameState):
 
 class MultiAgentSearchAgent(Agent):
     
-
     def __init__(self, evalFn = 'scoreEvaluationFunction', depth = '2'):
         self.index = 0 # Pacman is always agent index 0
         self.evaluationFunction = util.lookup(evalFn, globals())
