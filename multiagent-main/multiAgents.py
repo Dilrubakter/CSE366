@@ -195,14 +195,46 @@ class MinimaxAgent(MultiAgentSearchAgent):
     
 class AlphaBetaAgent(MultiAgentSearchAgent):
     """
-      Your minimax agent with alpha-beta pruning (question 3)
+    Your minimax agent with alpha-beta pruning (question 3)
     """
 
     def getAction(self, gameState):
         """
-          Returns the minimax action using self.depth and self.evaluationFunction
+        Returns the minimax action using self.depth and self.evaluationFunction
         """
-        "*** YOUR CODE HERE ***"
+        def alphaBeta(state, depth, agentIndex, alpha, beta):
+            if depth == self.depth * state.getNumAgents() or state.isWin() or state.isLose():
+                return self.evaluationFunction(state), None
+
+            if agentIndex == 0:  # Pacman's turn (maximizer)
+                value = float('-inf')
+                action = None
+                for a in state.getLegalActions(agentIndex):
+                    successor = state.generateSuccessor(agentIndex, a)
+                    successorValue, _ = alphaBeta(successor, depth + 1, (agentIndex + 1) % state.getNumAgents(), alpha, beta)
+                    if successorValue > value:
+                        value = successorValue
+                        action = a
+                    alpha = max(alpha, value)
+                    if value > beta:
+                        return value, action
+                return value, action
+            else:  # Ghosts' turn (minimizers)
+                value = float('inf')
+                action = None
+                for a in state.getLegalActions(agentIndex):
+                    successor = state.generateSuccessor(agentIndex, a)
+                    successorValue, _ = alphaBeta(successor, depth + 1, (agentIndex + 1) % state.getNumAgents(), alpha, beta)
+                    if successorValue < value:
+                        value = successorValue
+                        action = a
+                    beta = min(beta, value)
+                    if value < alpha:
+                        return value, action
+                return value, action
+
+        _, bestAction = alphaBeta(gameState, 0, 0, float('-inf'), float('inf'))
+        return bestAction
         util.raiseNotDefined()
 
 class ExpectimaxAgent(MultiAgentSearchAgent):
@@ -232,4 +264,3 @@ def betterEvaluationFunction(currentGameState):
 
 # Abbreviation
 better = betterEvaluationFunction
-
