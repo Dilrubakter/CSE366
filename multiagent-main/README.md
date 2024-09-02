@@ -1,26 +1,25 @@
-Berkeley AI Materials    
+Berkeley AI Materials
 
-Project 2: Multi-Agent Search
------------------------------
+## Project 2: Multi-Agent Search
 
 Version 1.002. Last Updated: 10/22/2014.
 
-* * *
+---
 
 ### Table of Contents
 
-*   [Introduction](#Introduction)
-*   [Welcome](#Welcome)
-*   [Q1: Reflex Agent](#Q1)
-*   [Q2: Minimax](#Q2)
-*   [Q3: Alpha-Beta Pruning](#Q3)
-*   [Q4: Expectimax](#Q4)
-*   [Q5: Evaluation Function](#Q5)
+- [Introduction](#Introduction)
+- [Welcome](#Welcome)
+- [Q1: Reflex Agent](#Q1)
+- [Q2: Minimax](#Q2)
+- [Q3: Alpha-Beta Pruning](#Q3)
+- [Q4: Expectimax](#Q4)
+- [Q5: Evaluation Function](#Q5)
 
-* * *
+---
 
 > ![](http://ai.berkeley.edu/projects/release/multiagent/v1/002/pacman_multi_agent.png)
-> 
+>
 > Pacman, now with ghosts.  
 > Minimax, Expectimax,  
 > Evaluation.
@@ -51,39 +50,39 @@ The code for this project contains the following files, available as a [zip arch
 
 **Files you'll edit:**
 
-[`multiAgents.py`](multiAgents.py)   Where all of your multi-agent search agents will reside.
+[`multiAgents.py`](multiAgents.py) Where all of your multi-agent search agents will reside.
 
 **Files you may want to read:**
 
-[`pacman.py`](pacman.py)   The main file that runs Pacman games. This file also describes a Pacman `GameState` type, which you will use extensively in this project
+[`pacman.py`](pacman.py) The main file that runs Pacman games. This file also describes a Pacman `GameState` type, which you will use extensively in this project
 
-[`game.py`](game.py)   The logic behind how the Pacman world works. This file describes several supporting types like AgentState, Agent, Direction, and Grid.
+[`game.py`](game.py) The logic behind how the Pacman world works. This file describes several supporting types like AgentState, Agent, Direction, and Grid.
 
-[`util.py`](util.py)   Useful data structures for implementing search algorithms.
+[`util.py`](util.py) Useful data structures for implementing search algorithms.
 
 **Files you can ignore:**
 
-[`graphicsDisplay.py`](graphicsDisplay.py)   Graphics for Pacman
+[`graphicsDisplay.py`](graphicsDisplay.py) Graphics for Pacman
 
-[`graphicsUtils.py`](graphicsUtils.py)   Support for Pacman graphics
+[`graphicsUtils.py`](graphicsUtils.py) Support for Pacman graphics
 
-[`textDisplay.py`](textDisplay.py)   ASCII graphics for Pacman
+[`textDisplay.py`](textDisplay.py) ASCII graphics for Pacman
 
-[`ghostAgents.py`](ghostAgents.py)   Agents to control ghosts
+[`ghostAgents.py`](ghostAgents.py) Agents to control ghosts
 
-[`keyboardAgents.py`](keyboardAgents.py)   Keyboard interfaces to control Pacman
+[`keyboardAgents.py`](keyboardAgents.py) Keyboard interfaces to control Pacman
 
-[`layout.py`](layout.py)   Code for reading layout files and storing their contents
+[`layout.py`](layout.py) Code for reading layout files and storing their contents
 
-[`autograder.py`](autograder.py)   Project autograder
+[`autograder.py`](autograder.py) Project autograder
 
-[`testParser.py`](testParser.py)   Parses autograder test and solution files
+[`testParser.py`](testParser.py) Parses autograder test and solution files
 
-[`testClasses.py`](testClasses.py)   General autograding test classes
+[`testClasses.py`](testClasses.py) General autograding test classes
 
-[`test_cases/`](test_cases)   Directory containing the test cases for each question
+[`test_cases/`](test_cases) Directory containing the test cases for each question
 
-[`multiagentTestClasses.py`](multiagentTestClasses.html)   Project 2 specific autograding test classes
+[`multiagentTestClasses.py`](multiagentTestClasses.html) Project 2 specific autograding test classes
 
 **Files to Edit and Submit:** You will fill in portions of [`multiAgents.py`](multiAgents.py) during the assignment. You should submit this file with your code and comments. Please _do not_ change the other files in this distribution or submit any of our original files other than this file.
 
@@ -95,7 +94,7 @@ The code for this project contains the following files, available as a [zip arch
 
 **Discussion:** Please be careful not to post spoilers.
 
-* * *
+---
 
 ### <a name="Welcome"></a> Multi-Agent Pacman
 
@@ -113,7 +112,7 @@ Note that it plays quite poorly even on simple layouts:
 
 Inspect its code (in `multiAgents.py`) and make sure you understand what it's doing.
 
-* * *
+---
 
 ### <a name="Q1"></a> Question 1 (4 points): Reflex Agent
 
@@ -145,7 +144,7 @@ To run it without graphics, use:
 
 Don't spend too much time on this question, though, as the meat of the project lies ahead.
 
-* * *
+---
 
 ### <a name="Q2"></a> Question 2 (5 points): Minimax
 
@@ -165,22 +164,22 @@ This will show what your algorithm does on a number of small trees, as well as a
 
 _**Hints and Observations**_
 
-*   The correct implementation of minimax will lead to Pacman losing the game in some tests. This is not a problem: as it is correct behaviour, it will pass the tests.
-*   The evaluation function for the pacman test in this part is already written (`self.evaluationFunction`). You shouldn't change this function, but recognize that now we're evaluating \*states\* rather than actions, as we were for the reflex agent. Look-ahead agents evaluate future states whereas reflex agents evaluate actions from the current state.
-*   The minimax values of the initial state in the `minimaxClassic` layout are 9, 8, 7, -492 for depths 1, 2, 3 and 4 respectively. Note that your minimax agent will often win (665/1000 games for us) despite the dire prediction of depth 4 minimax.
-    
-    `python pacman.py -p MinimaxAgent -l minimaxClassic -a depth=4`
-    
-*   Pacman is always agent 0, and the agents move in order of increasing agent index.
-*   All states in minimax should be `GameStates`, either passed in to `getAction` or generated via `GameState.generateSuccessor`. In this project, you will not be abstracting to simplified states.
-*   On larger boards such as `openClassic` and `mediumClassic` (the default), you'll find Pacman to be good at not dying, but quite bad at winning. He'll often thrash around without making progress. He might even thrash around right next to a dot without eating it because he doesn't know where he'd go after eating that dot. Don't worry if you see this behavior, question 5 will clean up all of these issues.
-*   When Pacman believes that his death is unavoidable, he will try to end the game as soon as possible because of the constant penalty for living. Sometimes, this is the wrong thing to do with random ghosts, but minimax agents always assume the worst:
-    
-    `python pacman.py -p MinimaxAgent -l trappedClassic -a depth=3`
-    
-    Make sure you understand why Pacman rushes the closest ghost in this case.
+- The correct implementation of minimax will lead to Pacman losing the game in some tests. This is not a problem: as it is correct behaviour, it will pass the tests.
+- The evaluation function for the pacman test in this part is already written (`self.evaluationFunction`). You shouldn't change this function, but recognize that now we're evaluating \*states\* rather than actions, as we were for the reflex agent. Look-ahead agents evaluate future states whereas reflex agents evaluate actions from the current state.
+- The minimax values of the initial state in the `minimaxClassic` layout are 9, 8, 7, -492 for depths 1, 2, 3 and 4 respectively. Note that your minimax agent will often win (665/1000 games for us) despite the dire prediction of depth 4 minimax.
 
-* * *
+  `python pacman.py -p MinimaxAgent -l minimaxClassic -a depth=4`
+
+- Pacman is always agent 0, and the agents move in order of increasing agent index.
+- All states in minimax should be `GameStates`, either passed in to `getAction` or generated via `GameState.generateSuccessor`. In this project, you will not be abstracting to simplified states.
+- On larger boards such as `openClassic` and `mediumClassic` (the default), you'll find Pacman to be good at not dying, but quite bad at winning. He'll often thrash around without making progress. He might even thrash around right next to a dot without eating it because he doesn't know where he'd go after eating that dot. Don't worry if you see this behavior, question 5 will clean up all of these issues.
+- When Pacman believes that his death is unavoidable, he will try to end the game as soon as possible because of the constant penalty for living. Sometimes, this is the wrong thing to do with random ghosts, but minimax agents always assume the worst:
+
+  `python pacman.py -p MinimaxAgent -l trappedClassic -a depth=3`
+
+  Make sure you understand why Pacman rushes the closest ghost in this case.
+
+---
 
 ### <a name="Q3"></a> Question 3 (5 points): Alpha-Beta Pruning
 
@@ -210,7 +209,7 @@ This will show what your algorithm does on a number of small trees, as well as a
 
 The correct implementation of alpha-beta pruning will lead to Pacman losing some of the tests. This is not a problem: as it is correct behaviour, it will pass the tests.
 
-* * *
+---
 
 ### <a name="Q4"></a> Question 4 (5 points): Expectimax
 
@@ -238,7 +237,7 @@ You should find that your `ExpectimaxAgent` wins about half the time, while your
 
 The correct implementation of expectimax will lead to Pacman losing some of the tests. This is not a problem: as it is correct behaviour, it will pass the tests.
 
-* * *
+---
 
 ### <a name="Q5"></a> Question 5 (6 points): Evaluation Function
 
@@ -248,18 +247,18 @@ Write a better evaluation function for pacman in the provided function `betterEv
 
 Grading: the autograder will run your agent on the `smallClassic` layout 10 times. We will assign points to your evaluation function in the following way:
 
-*   If you win at least once without timing out the autograder, you receive 1 points. Any agent not satisfying these criteria will receive 0 points.
-*   +1 for winning at least 5 times, +2 for winning all 10 times
-*   +1 for an average score of at least 500, +2 for an average score of at least 1000 (including scores on lost games)
-*   +1 if your games take on average less than 30 seconds on the autograder machine. The autograder is run on EC2, so this machine will have a fair amount of resources, but your personal computer could be far less performant (netbooks) or far more performant (gaming rigs).
-*   The additional points for average score and computation time will only be awarded if you win at least 5 times.
+- If you win at least once without timing out the autograder, you receive 1 points. Any agent not satisfying these criteria will receive 0 points.
+- +1 for winning at least 5 times, +2 for winning all 10 times
+- +1 for an average score of at least 500, +2 for an average score of at least 1000 (including scores on lost games)
+- +1 if your games take on average less than 30 seconds on the autograder machine. The autograder is run on EC2, so this machine will have a fair amount of resources, but your personal computer could be far less performant (netbooks) or far more performant (gaming rigs).
+- The additional points for average score and computation time will only be awarded if you win at least 5 times.
 
 #### Hints and Observations
 
-*   As for your reflex agent evaluation function, you may want to use the reciprocal of important values (such as distance to food) rather than the values themselves.
-*   One way you might want to write your evaluation function is to use a linear combination of features. That is, compute values for features about the state that you think are important, and then combine those features by multiplying them by different values and adding the results together. You might decide what to multiply each feature by based on how important you think it is.
+- As for your reflex agent evaluation function, you may want to use the reciprocal of important values (such as distance to food) rather than the values themselves.
+- One way you might want to write your evaluation function is to use a linear combination of features. That is, compute values for features about the state that you think are important, and then combine those features by multiplying them by different values and adding the results together. You might decide what to multiply each feature by based on how important you think it is.
 
-* * *
+---
 
 ### Submission
 
